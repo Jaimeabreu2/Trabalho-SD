@@ -1,0 +1,206 @@
+AUDITORIA TÉCNICA FINAL
+=======================
+Data: 28/06/2026
+
+NOTA POSTERIOR:
+Os achados sobre segurança entre propostas Paxos e ausência de OM(m) foram
+corrigidos na etapa de reforço algorítmico. Consulte
+resultados/reforco_algoritmico_final.txt para o estado mais recente.
+
+RESUMO GERAL
+------------
+O fluxo local principal está funcional. Os comandos manuais, cenários JSON,
+modo --todos, CSV, gráficos, relatório e verbose foram executados com sucesso.
+Os 11 cenários JSON existem, possuem os campos obrigatórios e foram carregados.
+
+A suíte final executou 82 testes: 81 passaram e 1 foi ignorado porque o
+matplotlib instalado no perfil do usuário não fica visível dentro do sandbox.
+A geração real dos cinco PNGs foi validada fora do sandbox.
+
+A camada de emulação está preparada e os controladores foram testados com
+servidores TCP reais em localhost. Mininet e Open vSwitch não estão instalados
+neste ambiente, portanto a topologia Mininet não foi executada de verdade.
+
+PROBLEMAS CRÍTICOS
+------------------
+[OK] Nenhum problema crítico foi encontrado nos comandos e cenários oficiais
+de uma única execução usados pelo projeto.
+
+PROBLEMAS MÉDIOS
+----------------
+[MÉDIO] O Paxos é seguro apenas no fluxo didático de uma proposta por
+execução. Em duas propostas sucessivas na mesma rede, a primeira decisão pode
+ser substituída:
+- proposta 1 decidiu [1, 1, 1, 1, 1];
+- proposta 2 decidiu [2, 2, 2, 2, 2].
+O proponente não escolhe o valor previamente aceito de maior rodada recebido
+nos PROMISE. Corrigir exige ampliar a mensagem PROMISE e a lógica central.
+
+[MÉDIO] O LSP implementa uma rodada de ORDER/FORWARD, não a recursão completa
+OM(m). Com 5 drones, 1 comandante bizantino e n >= 3f + 1, os quatro drones
+corretos ficaram sem decisão. A implementação atual funciona nos cenários
+oficiais porque o comandante 0 é sempre correto. Corrigir exige mudança
+algorítmica e definição de valor padrão.
+
+[MÉDIO] A mensagem "dentro da garantia clássica" verifica apenas n >= 3f + 1.
+Ela descreve a condição teórica, mas não garante que a implementação didática
+possua todas as propriedades do algoritmo clássico. Essa limitação passou a
+ser documentada explicitamente no README.
+
+[MÉDIO] O CLI aceita combinações não recomendadas:
+- Paxos com falha bizantina executa apenas a demonstração isolada e ignora
+  CSV, gráficos e relatório;
+- LSP com crash executa, mas apresenta "falhas bizantinas: 0" e usa uma
+  semântica fora do objetivo documentado.
+Recomenda-se validar pares algoritmo/falha ou criar um subcomando explícito
+para a demonstração bizantina.
+
+[MÉDIO] A validade considera apenas propostas não nulas. Como normalmente só o
+proponente/comandante registra candidato_proposto, "Validade: Sim" significa
+que a decisão respeitou essa proposta registrada, não que todos os drones
+corretos propuseram explicitamente o mesmo valor.
+
+[MÉDIO] A emulação Mininet ainda não foi executada em Mininet real. Os sockets,
+controladores, encerramento e arquivos foram testados em localhost, mas hosts,
+switch e namespaces precisam de validação em Linux/VM.
+
+[MÉDIO] No LSP emulado, o host coord orquestra os repasses. Os drones são
+processos separados e respondem via TCP, mas não abrem conexões diretas entre
+si. Isso está documentado como limitação didática.
+
+PROBLEMAS PEQUENOS
+------------------
+[PEQUENO] Cenários Mininet JSON são carregados diretamente no script da
+topologia, sem a validação completa usada por simulador.py. Os arquivos
+oficiais são válidos, mas um JSON manual incorreto pode gerar erro menos
+amigável.
+
+[PEQUENO] Os testes de integração de sockets imprimem muitos logs durante a
+suíte. Eles não afetam o resultado, mas tornam a saída de testes mais longa.
+
+[PEQUENO] Quando matplotlib não está disponível, gráficos novos não são
+gerados, porém PNGs antigos podem permanecer na pasta resultados/. O terminal
+mostra o aviso correto, mas convém observar a data dos arquivos.
+
+[PEQUENO] A seed da emulação bizantina é recebida, mas a alteração contraditória
+é determinística pelo destino. O comportamento é previsível, embora não use
+sorteio.
+
+CORREÇÕES SIMPLES APLICADAS
+---------------------------
+[OK] Configuração manual inválida agora encerra com mensagem curta e sem
+Traceback.
+
+[OK] mininet_topologia.py --help funciona mesmo sem Mininet instalado.
+
+[OK] Ausência de Mininet agora retorna código 1 e mensagem amigável.
+
+[OK] A conclusão de relatório individual cita apenas o algoritmo realmente
+executado.
+
+[OK] README principal e README da emulação agora informam que o LSP é uma
+aproximação de uma rodada e que coord orquestra os repasses emulados.
+
+[OK] Foram adicionados testes para as quatro correções acima.
+
+PONTOS VERIFICADOS E CORRETOS
+-----------------------------
+[OK] Maioria do Paxos: (n // 2) + 1.
+[OK] PROMISE e ACCEPTED contam apenas respostas entregues.
+[OK] Drone em crash não envia nem recebe.
+[OK] Omissão não incrementa mensagens recebidas.
+[OK] Temporização entrega após atraso e registra a métrica.
+[OK] Paxos não decide sem maioria.
+[OK] Decisão Paxos é enviada somente após maioria de ACCEPTED.
+[OK] Drones bizantinos não entram na verificação de acordo do LSP.
+[OK] Decisão LSP usa maioria estrita.
+[OK] Empate e ausência de maioria retornam sem decisão.
+[OK] Limites 5/1, 5/2, 10/3 e 10/4 foram testados corretamente.
+[OK] Os 11 cenários JSON foram carregados e executados na ordem esperada.
+[OK] CSV possui as 17 colunas padronizadas e booleanos Sim/Não.
+[OK] Relatório registra cenários fora de n >= 3f + 1.
+[OK] Falta do matplotlib não derruba a simulação.
+[OK] Sem --verbose não aparecem logs [VERBOSE].
+[OK] --todos --verbose separa os cenários.
+[OK] Verbose não impede CSV, gráficos ou relatório.
+[OK] Imports da emulação são seguros sem Mininet.
+[OK] Servidor TCP responde PREPARE/PROMISE em localhost.
+[OK] Controladores Paxos e LSP foram testados com cinco sockets locais.
+[OK] README principal e guia Mininet iniciante existem e refletem o código.
+
+COMANDOS TESTADOS
+-----------------
+[OK] python main.py --algoritmo paxos --drones 5 --falha crash --falhos 1 --seed 42
+[OK] python main.py --algoritmo lsp --drones 5 --falha bizantina --falhos 1 --seed 42
+[OK] python main.py --cenario cenarios/paxos_5_crash.json
+[OK] python main.py --cenario cenarios/lsp_5_bizantina_1.json
+[OK] python main.py --todos --seed 42
+[OK] python main.py --todos --seed 42 --csv
+[OK] python main.py --todos --seed 42 --csv --graficos
+[OK] python main.py --todos --seed 42 --csv --graficos --relatorio
+[OK] python main.py --todos --seed 42 --csv --graficos --relatorio --verbose
+[OK] python -m unittest discover -s tests -v
+[OK] python emulacao/verificar_ambiente.py
+[OK] python emulacao/mininet_topologia.py --help
+[OK] fallback amigável de emulacao/mininet_topologia.py sem Mininet
+[PENDENTE] sudo mn -c
+[PENDENTE] Paxos em Mininet real
+[PENDENTE] LSP em Mininet real
+[PENDENTE] cenários JSON em Mininet real
+
+ARQUIVOS E ARTEFATOS VERIFICADOS
+--------------------------------
+[OK] módulos principais Python
+[OK] 11 arquivos em cenarios/
+[OK] testes em tests/
+[OK] scripts e documentação em emulacao/
+[OK] requirements.txt
+[OK] README.md
+[OK] resultados/resultados_todos.csv
+[OK] resultados/relatorio_todos.txt
+[OK] cinco gráficos PNG
+[OK] resultados/validacao_mininet.txt
+
+TESTES EXECUTADOS
+-----------------
+Total: 82
+Passaram: 81
+Ignorado: 1 (PNG/matplotlib não visível no sandbox)
+Falharam: 0
+
+Fluxo completo final:
+- código de saída: 0;
+- 800 logs verbose;
+- tabela geral presente;
+- CSV presente;
+- 5 PNGs presentes;
+- relatório presente;
+- stderr vazio.
+
+RECOMENDAÇÕES FINAIS
+--------------------
+1. Antes da entrega, decidir se o professor exige os algoritmos clássicos
+   completos ou aceita versões didáticas explicitamente limitadas.
+2. Se exigir Paxos completo, preservar valores já aceitos entre propostas.
+3. Se exigir LSP clássico, implementar OM(m), valor padrão e teste com
+   comandante bizantino.
+4. Validar a topologia em VM Linux com Mininet e Open vSwitch.
+5. Guardar as saídas e os arquivos emulacao_*.txt produzidos pela VM.
+6. Na apresentação, chamar as versões de "implementações didáticas" e não
+   afirmar validação Mininet real antes de executá-la.
+
+CORREÇÕES QUE EXIGEM AUTORIZAÇÃO
+--------------------------------
+- ampliar o Paxos para múltiplas propostas seguras;
+- substituir o LSP de uma rodada por OM(m);
+- restringir ou redefinir combinações manuais algoritmo/falha;
+- alterar a definição de validade;
+- fazer drones LSP emulados conectarem diretamente uns aos outros.
+
+LISTA OBJETIVA ANTES DA ENTREGA
+-------------------------------
+- obrigatório: executar Mininet em Linux/VM e salvar evidências;
+- obrigatório: alinhar com o professor se versões didáticas são suficientes;
+- recomendado: não demonstrar combinações algoritmo/falha fora do README;
+- recomendado: apresentar claramente as limitações registradas;
+- opcional: reduzir logs dos testes de socket.

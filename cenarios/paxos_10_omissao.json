@@ -1,0 +1,10 @@
+{
+  "nome": "paxos_10_omissao",
+  "algoritmo": "paxos",
+  "drones": 10,
+  "falha": "omissao",
+  "falhos": 2,
+  "seed": 42,
+  "taxa_omissao": 0.3,
+  "atraso_max": 0
+}

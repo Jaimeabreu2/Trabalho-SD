@@ -1,0 +1,10 @@
+{
+  "nome": "paxos_10_crash",
+  "algoritmo": "paxos",
+  "drones": 10,
+  "falha": "crash",
+  "falhos": 2,
+  "seed": 42,
+  "taxa_omissao": 0.0,
+  "atraso_max": 0
+}

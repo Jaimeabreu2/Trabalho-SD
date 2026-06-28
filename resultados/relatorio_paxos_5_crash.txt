@@ -1,0 +1,37 @@
+Escolha de Comandante em uma Frota de Drones
+================================================
+Data e hora: 28/06/2026 11:10:34
+Total de cenários executados: 1
+Algoritmos utilizados: Paxos
+Falhas simuladas: crash
+
+Resumo dos cenários
+--------------------
+
+Cenário: paxos_5_crash
+Algoritmo: Paxos
+Drones: 5
+Falha: crash
+Falhos: 1
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens enviadas: 23
+Mensagens recebidas: 20
+Mensagens omitidas: 0
+Mensagens atrasadas: 0
+Mensagens contraditórias: 0
+Tempo de execução: 0.000058 s
+
+Arquivos CSV gerados
+---------------------
+Nenhum arquivo CSV foi gerado.
+
+Gráficos gerados
+-----------------
+Nenhum gráfico foi gerado.
+
+Conclusão:
+Os cenários foram executados com Paxos para falhas não bizantinas e Lamport-Shostak-Pease para falhas bizantinas. Os resultados indicam, em cada caso, se houve decisão, acordo, validade e terminação.

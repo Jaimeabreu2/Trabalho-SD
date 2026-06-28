@@ -1,0 +1,2 @@
+cenario,algoritmo,drones,falha,falhos,comandante_escolhido,decisao_alcancada,acordo,validade,terminacao,mensagens_enviadas,mensagens_recebidas,mensagens_omitidas,mensagens_atrasadas,mensagens_contraditorias,status_limite_teorico,tempo_execucao
+paxos_5_crash,Paxos,5,crash,1,2,Sim,Sim,Sim,Sim,23,20,0,0,0,,7.310000000870787e-05

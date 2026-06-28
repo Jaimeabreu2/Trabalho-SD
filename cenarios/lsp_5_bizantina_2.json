@@ -1,0 +1,12 @@
+{
+  "nome": "lsp_5_bizantina_2",
+  "algoritmo": "lsp",
+  "drones": 5,
+  "falha": "bizantina",
+  "falhos": 2,
+  "seed": 42,
+  "taxa_omissao": 0.0,
+  "atraso_max": 0,
+  "nivel_om": 2,
+  "valor_padrao": 0
+}

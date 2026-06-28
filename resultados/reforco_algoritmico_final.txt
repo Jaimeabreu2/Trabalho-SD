@@ -1,0 +1,113 @@
+RELATÓRIO FINAL DO REFORÇO ALGORÍTMICO
+=====================================
+Data: 28/06/2026
+
+PAXOS
+-----
+- Implementado consenso de valor único com propostas numeradas.
+- PREPARE só recebe promessa quando supera a maior proposta prometida.
+- PROMISE informa proposta aceita e valor aceito anteriores.
+- O proponente escolhe o valor do aceite de maior número.
+- ACCEPT_REQUEST antigo é rejeitado.
+- Propostas sucessivas na mesma rede preservam o valor já escolhido.
+- DECIDE não substitui uma decisão existente por valor conflitante.
+- Verbose mostra número, PROMISE, valor escolhido, ACCEPTED e decisão.
+
+Teste principal:
+- proposta 1 escolheu Drone 1;
+- proposta 2 iniciou com candidato Drone 2;
+- valor final permaneceu Drone 1.
+
+LSP / OM(m)
+-----------
+- Implementada recursão OM(m).
+- Participantes já presentes no caminho são removidos das próximas chamadas.
+- OM(0) realiza o envio direto.
+- OM(m) transforma cada tenente em comandante de OM(m - 1).
+- Mensagem ausente usa valor padrão.
+- Empate usa valor padrão.
+- Somente drones corretos entram em acordo e terminação.
+- Comandante bizantino em OM(1), com 5 drones e 1 falha, termina com acordo.
+- Cenários fora de n >= 3f + 1 continuam executando sem garantia.
+- Verbose mostra nível OM, comandante, caminho, valores e maioria.
+
+MÉTRICAS
+--------
+- Acordo, validade e terminação continuam no formato padronizado.
+- Paxos usa como proposta efetiva o valor preservado após PROMISE.
+- OM(m) usa a proposta do comandante correto para validade.
+- Com comandante bizantino, validade pode aparecer como Não aplicável.
+- CSV, gráficos e relatório continuam compatíveis.
+
+EMULAÇÃO
+--------
+- Drone socket mantém maior proposta prometida, proposta aceita, valor aceito
+  e decisão final.
+- Controlador Paxos emulado preserva aceites anteriores.
+- Controlador LSP emulado orquestra OM(m) por sockets TCP.
+- Mensagens JSON carregam número de proposta, caminho e nível OM.
+- Arquivo TXT registra ambiente, decisão, acordo, validade e terminação.
+- Ausência de Mininet continua retornando mensagem amigável.
+- mininet_topologia.py --help funciona sem Mininet.
+
+TESTES
+------
+Comando:
+python -m unittest discover -s tests -v
+
+Resultado:
+- executados: 92;
+- aprovados: 91;
+- ignorados: 1 (matplotlib não visível no sandbox);
+- falhas: 0.
+
+FLUXO COMPLETO
+--------------
+Comando:
+python main.py --todos --seed 42 --csv --graficos --relatorio --verbose
+
+Resultado:
+- código de saída: 0;
+- duração aproximada: 1,46 s;
+- linhas de saída: 40.901;
+- logs verbose: 40.869;
+- CSV: gerado;
+- gráficos: 5 PNGs;
+- relatório: gerado;
+- stderr: vazio.
+
+STATUS MININET
+--------------
+- Mininet real: não executado neste ambiente.
+- Motivo: Windows sem WSL, Mininet ou Open vSwitch.
+- Servidores TCP localhost: validados.
+- Paxos reforçado por sockets: validado.
+- OM(1) por sockets com um bizantino: validado.
+- Validação da topologia real: pendente em Linux/VM.
+
+LIMITAÇÕES RESTANTES
+--------------------
+- Paxos é single-decree; não há log replicado ou Multi-Paxos.
+- OM(m) cresce rapidamente em mensagens conforme m aumenta.
+- OM(4) com verbose produz dezenas de milhares de linhas.
+- Na emulação, coord orquestra as chamadas OM; drones não conectam diretamente
+  uns aos outros.
+- Temporização usa atraso com sleep e não implementa timeout do protocolo.
+- Cenários acima do limite teórico são apenas experimentais.
+
+COMANDOS RECOMENDADOS
+---------------------
+Demonstração local Paxos:
+python main.py --algoritmo paxos --drones 5 --falha crash --falhos 1 --seed 42 --verbose
+
+Demonstração local OM(1):
+python main.py --cenario cenarios/lsp_5_bizantina_1.json --verbose
+
+Todos os resultados:
+python main.py --todos --seed 42 --csv --graficos --relatorio
+
+Mininet Paxos:
+sudo python3 emulacao/mininet_topologia.py --algoritmo paxos --drones 5 --falha crash --falhos 1 --seed 42
+
+Mininet OM(1):
+sudo python3 emulacao/mininet_topologia.py --algoritmo lsp --drones 5 --falha bizantina --falhos 1 --seed 42

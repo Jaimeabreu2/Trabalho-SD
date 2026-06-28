@@ -1,0 +1,44 @@
+ESTADO ANTES DO REFORÇO ALGORÍTMICO
+===================================
+Data: 28/06/2026
+
+Suíte executada:
+python -m unittest discover -s tests -v
+
+Resultado:
+- testes executados: 82;
+- testes aprovados: 81;
+- testes ignorados: 1 (matplotlib não visível no sandbox);
+- falhas: 0.
+
+Fluxo completo executado:
+python main.py --todos --seed 42 --csv --graficos --relatorio --verbose
+
+Resultado do fluxo:
+- código de saída: 0;
+- tabela geral: gerada;
+- CSV: gerado;
+- gráficos PNG: 5;
+- relatório: gerado;
+- logs verbose: 800;
+- stderr: vazio.
+
+Observação:
+Este registro foi criado antes da etapa de reforço algorítmico do Paxos e da
+implementação recursiva OM(m). A execução real no Mininet ainda não foi
+realizada porque o ambiente atual não possui Mininet ou Open vSwitch.
+
+Arquivos planejados para alteração:
+- drone.py;
+- mensagem.py;
+- paxos.py;
+- lsp.py;
+- metricas.py, se necessário;
+- main.py;
+- emulacao/drone_socket.py;
+- emulacao/controlador_emulacao.py;
+- emulacao/mininet_topologia.py;
+- README.md;
+- emulacao/README.md;
+- emulacao/README_MININET_INICIANTE.md;
+- testes relacionados.

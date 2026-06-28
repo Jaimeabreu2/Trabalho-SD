@@ -1,0 +1,38 @@
+Validação prática da emulação Mininet
+=====================================
+Data: 28/06/2026
+Ambiente disponível: Windows, Python 3.13.1
+
+Comandos verificados no ambiente atual:
+- python --version: disponível
+- wsl --list --verbose: indisponível
+- mn --version: indisponível
+- ovs-vsctl --version: indisponível
+
+Paxos executado realmente no Mininet: Não
+LSP executado realmente no Mininet: Não
+
+Validações realizadas:
+- servidor TCP JSON testado em localhost;
+- resposta PROMISE testada;
+- controlador Paxos testado com cinco servidores TCP locais;
+- controlador LSP testado com cinco servidores TCP locais e um bizantino;
+- Paxos local por sockets decidiu pelo Drone 2;
+- LSP local por sockets decidiu pelo Drone 2 e registrou 4 contradições;
+- encerramento controlado do drone testado;
+- omissão e alteração bizantina testadas;
+- geração do arquivo de resultado testada;
+- importação dos módulos sem Mininet testada;
+- ausência do Mininet tratada com mensagem amigável;
+- versão local principal executada novamente.
+
+Arquivos Mininet gerados:
+- nenhum, pois o Mininet não está instalado neste ambiente.
+
+Problemas encontrados:
+- WSL, Mininet e Open vSwitch não estão disponíveis.
+
+Observação final:
+A validação real permanece pendente em Linux, WSL compatível ou máquina
+virtual com Mininet e Open vSwitch. Antes da execução, usar `sudo mn -c` e
+seguir a seção "Validação prática" de emulacao/README.md.

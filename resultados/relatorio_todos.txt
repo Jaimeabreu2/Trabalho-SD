@@ -1,0 +1,215 @@
+﻿Escolha de Comandante em uma Frota de Drones
+================================================
+Data e hora: 28/06/2026 12:19:51
+Total de cenários executados: 11
+Algoritmos utilizados: Lamport-Shostak-Pease, Paxos
+Falhas simuladas: bizantina, crash, omissao, temporizacao
+
+Resumo dos cenários
+--------------------
+
+Cenário: paxos_5_crash
+Algoritmo: Paxos
+Drones: 5
+Falha: crash
+Falhos: 1
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens enviadas: 23
+Mensagens recebidas: 20
+Mensagens omitidas: 0
+Mensagens atrasadas: 0
+Mensagens contraditórias: 0
+Tempo de execução: 0.000084 s
+
+Cenário: paxos_5_omissao
+Algoritmo: Paxos
+Drones: 5
+Falha: omissao
+Falhos: 1
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens enviadas: 24
+Mensagens recebidas: 21
+Mensagens omitidas: 3
+Mensagens atrasadas: 0
+Mensagens contraditórias: 0
+Tempo de execução: 0.000050 s
+
+Cenário: paxos_5_temporizacao
+Algoritmo: Paxos
+Drones: 5
+Falha: temporizacao
+Falhos: 1
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens enviadas: 25
+Mensagens recebidas: 25
+Mensagens omitidas: 0
+Mensagens atrasadas: 5
+Mensagens contraditórias: 0
+Tempo de execução: 0.021210 s
+
+Cenário: paxos_10_crash
+Algoritmo: Paxos
+Drones: 10
+Falha: crash
+Falhos: 2
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens enviadas: 46
+Mensagens recebidas: 40
+Mensagens omitidas: 0
+Mensagens atrasadas: 0
+Mensagens contraditórias: 0
+Tempo de execução: 0.000082 s
+
+Cenário: paxos_10_omissao
+Algoritmo: Paxos
+Drones: 10
+Falha: omissao
+Falhos: 2
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens enviadas: 48
+Mensagens recebidas: 44
+Mensagens omitidas: 4
+Mensagens atrasadas: 0
+Mensagens contraditórias: 0
+Tempo de execução: 0.000075 s
+
+Cenário: paxos_10_temporizacao
+Algoritmo: Paxos
+Drones: 10
+Falha: temporizacao
+Falhos: 2
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens enviadas: 50
+Mensagens recebidas: 50
+Mensagens omitidas: 0
+Mensagens atrasadas: 10
+Mensagens contraditórias: 0
+Tempo de execução: 0.044346 s
+
+Cenário: lsp_5_bizantina_1
+Algoritmo: Lamport-Shostak-Pease
+Drones: 5
+Falha: bizantina
+Falhos: 1
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens enviadas: 16
+Mensagens recebidas: 16
+Mensagens omitidas: 0
+Mensagens atrasadas: 0
+Mensagens contraditórias: 3
+Tempo de execução: 0.000150 s
+Status do limite teórico: Dentro
+
+Cenário: lsp_5_bizantina_2
+Algoritmo: Lamport-Shostak-Pease
+Drones: 5
+Falha: bizantina
+Falhos: 2
+Comandante escolhido: Nenhum
+Decisão alcançada: Não
+Acordo: Não
+Validade: Não
+Terminação: Sim
+Mensagens enviadas: 40
+Mensagens recebidas: 40
+Mensagens omitidas: 0
+Mensagens atrasadas: 0
+Mensagens contraditórias: 18
+Tempo de execução: 0.000267 s
+Status do limite teórico: Fora
+
+Cenário: lsp_10_bizantina_1
+Algoritmo: Lamport-Shostak-Pease
+Drones: 10
+Falha: bizantina
+Falhos: 1
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens enviadas: 81
+Mensagens recebidas: 81
+Mensagens omitidas: 0
+Mensagens atrasadas: 0
+Mensagens contraditórias: 8
+Tempo de execução: 0.000448 s
+Status do limite teórico: Dentro
+
+Cenário: lsp_10_bizantina_3
+Algoritmo: Lamport-Shostak-Pease
+Drones: 10
+Falha: bizantina
+Falhos: 3
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens enviadas: 3609
+Mensagens recebidas: 3609
+Mensagens omitidas: 0
+Mensagens atrasadas: 0
+Mensagens contraditórias: 1200
+Tempo de execução: 0.022041 s
+Status do limite teórico: Dentro
+
+Cenário: lsp_10_bizantina_4
+Algoritmo: Lamport-Shostak-Pease
+Drones: 10
+Falha: bizantina
+Falhos: 4
+Comandante escolhido: Nenhum
+Decisão alcançada: Não
+Acordo: Não
+Validade: Não
+Terminação: Sim
+Mensagens enviadas: 18729
+Mensagens recebidas: 18729
+Mensagens omitidas: 0
+Mensagens atrasadas: 0
+Mensagens contraditórias: 8320
+Tempo de execução: 0.348347 s
+Status do limite teórico: Fora
+
+Arquivos CSV gerados
+---------------------
+- resultados\resultados_todos.csv
+
+Gráficos gerados
+-----------------
+Nenhum gráfico foi gerado.
+
+Observação:
+Alguns cenários bizantinos foram executados fora da condição n >= 3f + 1. Nesses casos, a simulação é executada, mas não há garantia teórica clássica de consenso.
+
+Conclusão:
+A execução utilizou: Lamport-Shostak-Pease, Paxos. Os resultados indicam, em cada caso, se houve decisão, acordo, validade e terminação.

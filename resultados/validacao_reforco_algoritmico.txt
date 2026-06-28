@@ -1,0 +1,100 @@
+Validação da etapa de reforço algorítmico
+Data: 2026-06-28 12:19:50 -03:00
+
+Resumo geral
+- A validação local da etapa foi bem-sucedida.
+- O Paxos reforçado passou nos testes de segurança para propostas sucessivas.
+- O Lamport-Shostak-Pease foi validado como uma implementação recursiva de OM(m) nos cenários cobertos pelos testes.
+- CSV, relatório e modo verbose continuam funcionando.
+- A emulação por sockets continua funcionando localmente.
+- A validação real em Mininet continua pendente neste ambiente.
+
+Status do Paxos reforçado
+- Preserva valor previamente aceito entre propostas sucessivas: Sim.
+- PROMISE carrega proposta aceita e valor aceito: Sim.
+- O proponente escolhe o valor aceito de maior número quando existir: Sim.
+- Propostas antigas são rejeitadas depois de promessa maior: Sim.
+- ACCEPT_REQUEST antigo é rejeitado corretamente: Sim.
+- Testes que confirmam isso:
+  - test_proposta_maior_preserva_valor_ja_aceito
+  - test_promise_informa_valor_aceito_anterior
+  - test_prepare_antigo_e_rejeitado
+  - test_accept_request_antigo_e_rejeitado
+
+Status do OM(m)
+- LSP agora executa OM(m) recursivo: Sim.
+- OM(m) termina com comandante correto: Sim.
+- OM(m) termina com comandante bizantino dentro do limite testado: Sim.
+- OM(m) usa valor padrão em ausência de mensagem: Sim.
+- OM(m) usa valor padrão em empate: Sim.
+- Acordo considera apenas drones corretos: Sim.
+- Limite n >= 3f + 1 continua sendo exibido: Sim.
+- Testes que confirmam isso:
+  - test_om_zero_com_comandante_correto
+  - test_om_um_termina_com_comandante_bizantino
+  - test_om_usa_valor_padrao_quando_mensagem_ausente
+  - test_empate_usa_valor_padrao_configurado
+  - test_lsp_executa_fora_do_limite
+
+Status das métricas e saídas
+- Métricas padronizadas: Sim.
+- CSV: Sim.
+- Relatório TXT: Sim.
+- Verbose: Sim.
+- Gráficos: Parcial neste ambiente.
+- Observação: a geração de gráficos falhou de forma amigável porque matplotlib não está instalado nesta máquina. Os arquivos PNG já existem na pasta resultados, mas a geração nova não foi revalidada aqui.
+
+Status dos cenários e comandos validados
+- python -m unittest discover -s tests -v -> OK.
+- python main.py --todos --seed 42 --csv --graficos --relatorio -> OK, com aviso amigável sobre ausência de matplotlib.
+- python main.py --algoritmo paxos --drones 5 --falha crash --falhos 1 --seed 42 -> OK.
+- python main.py --algoritmo lsp --drones 5 --falha bizantina --falhos 1 --seed 42 -> OK.
+- python main.py --cenario cenarios/paxos_5_crash.json -> OK.
+- python main.py --cenario cenarios/lsp_5_bizantina_1.json -> OK.
+- python main.py --algoritmo paxos --drones 5 --falha crash --falhos 1 --seed 42 --verbose -> OK.
+- python main.py --algoritmo lsp --drones 5 --falha bizantina --falhos 1 --seed 42 --verbose -> OK.
+- python emulacao/verificar_ambiente.py -> OK, com mensagem amigável de ambiente incompatível.
+- python emulacao/mininet_topologia.py --help -> OK.
+
+Resultado dos testes
+- Total de testes executados: 92
+- Passaram: 91
+- Ignorados: 1
+- Falharam: 0
+- Motivo do teste ignorado: matplotlib não instalado no ambiente, afetando apenas um teste de criação real de PNG.
+
+Arquivos gerados e verificados
+- resultados/resultados_todos.csv -> presente.
+- resultados/relatorio_todos.txt -> presente.
+- resultados/grafico_mensagens_enviadas.png -> presente.
+- resultados/grafico_tempo_execucao.png -> presente.
+- resultados/grafico_mensagens_contraditorias.png -> presente.
+- resultados/grafico_decisoes.png -> presente.
+- resultados/grafico_comparacao_algoritmos.png -> presente.
+- resultados/estado_antes_reforco_algoritmico.txt -> presente.
+- resultados/reforco_algoritmico.txt -> presente.
+- resultados/reforco_algoritmico_final.txt -> presente.
+- resultados/auditoria_final.txt -> presente.
+
+Status da emulação socket
+- Alinhada ao novo Paxos reforçado: Sim.
+- Alinhada ao OM(m) em modo local por sockets: Sim.
+- Validada por testes locais de socket e controlador: Sim.
+
+Status do Mininet real
+- Mininet não foi executado de verdade neste ambiente.
+- A execução real continua pendente para VM Linux com Mininet e Open vSwitch.
+- A ausência de Mininet não quebrou a versão local.
+
+Limitações restantes
+- A validação real em Mininet ainda precisa ser feita em VM Linux ou ambiente compatível.
+- A geração de gráficos depende de matplotlib instalado.
+- O cenário OM(4) com verbose pode produzir saída muito grande, então é melhor usar verbose apenas em cenários pequenos durante a apresentação.
+
+Conclusão objetiva
+STATUS FINAL: CONCLUÍDA
+
+Justificativa da conclusão
+- Tudo que era essencial localmente para o reforço algorítmico foi validado com sucesso.
+- Os algoritmos, testes, cenários, CSV, relatório e verbose continuam funcionando.
+- O único ponto pendente é a execução real em Mininet, que depende de outro ambiente e não invalida a conclusão local da etapa.

@@ -1,0 +1,53 @@
+ACOMPANHAMENTO DO REFORÇO ALGORÍTMICO
+=====================================
+Data de início: 28/06/2026
+
+Objetivos:
+- preservar valores previamente aceitos no Paxos;
+- rejeitar propostas antigas;
+- implementar Lamport-Shostak-Pease OM(m) recursivo;
+- usar valor padrão em empate ou ausência;
+- alinhar a demonstração por sockets com os conceitos reforçados;
+- preservar CSV, gráficos, relatório, verbose e cenários JSON.
+
+Mudanças feitas:
+- mensagens Paxos carregam número de proposta, proposta aceita e valor aceito;
+- aceitadores rejeitam PREPARE e ACCEPT_REQUEST antigos;
+- propostas maiores preservam o valor aceito de maior número;
+- LSP foi substituído por OM(m) recursivo com caminho e valor padrão;
+- comandante bizantino termina com acordo dentro do limite testado;
+- cenários LSP registram nível OM e valor padrão;
+- sockets emulados mantêm estado Paxos;
+- controlador emulado preserva aceites e orquestra OM(m);
+- READMEs foram alinhados aos algoritmos reforçados.
+
+Testes adicionados:
+- propostas Paxos sucessivas preservam o valor;
+- PROMISE informa aceite anterior;
+- PREPARE antigo é rejeitado;
+- ACCEPT_REQUEST antigo é rejeitado;
+- OM(0);
+- OM(1) com comandante bizantino;
+- valor padrão em ausência e empate;
+- Paxos emulado preserva aceite;
+- verbose não altera resultado.
+
+Limitações que permanecerem:
+- Paxos continua sendo consenso de valor único, não Multi-Paxos;
+- OM(m) possui crescimento combinatório de mensagens;
+- verbose de OM(4) gera dezenas de milhares de linhas;
+- coord orquestra OM(m) na emulação;
+- temporização local não implementa timeout;
+- cenários fora de n >= 3f + 1 não possuem garantia.
+
+Status Mininet:
+- Mininet real não disponível neste ambiente;
+- Paxos e OM(1) validados com cinco servidores TCP em localhost;
+- topologia real continua pendente em Linux/VM.
+
+Resultado final:
+- 92 testes executados;
+- 91 aprovados;
+- 1 ignorado pelo isolamento do matplotlib;
+- 0 falhas;
+- fluxo completo com código 0, CSV, 5 PNGs e relatório.
