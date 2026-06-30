@@ -1,0 +1,19 @@
+﻿Resultado da emulação Mininet
+===============================
+Data e hora: 29/06/2026 21:19:57
+Ambiente: Mininet
+Algoritmo: paxos
+Quantidade de drones: 5
+Tipo de falha: crash
+Quantidade de falhos: 1
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens trocadas: 27
+Mensagens contraditórias: 0
+Número da proposta: 1
+Observação: os drones foram executados como hosts emulados.
+Comunicação: sockets TCP com mensagens JSON.
+Validação do ambiente: Mininet real.

@@ -1,0 +1,20 @@
+﻿Resultado da emulação Mininet
+===============================
+Data e hora: 29/06/2026 21:20:56
+Ambiente: Mininet
+Algoritmo: lsp
+Quantidade de drones: 5
+Tipo de falha: bizantina
+Quantidade de falhos: 1
+Comandante escolhido: Drone 2
+Decisão alcançada: Sim
+Acordo: Sim
+Validade: Sim
+Terminação: Sim
+Mensagens trocadas: 32
+Mensagens contraditórias: 3
+Status do limite teórico: Dentro
+Nível OM(m): 1
+Observação: os drones foram executados como hosts emulados.
+Comunicação: sockets TCP com mensagens JSON.
+Validação do ambiente: Mininet real.
